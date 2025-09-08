@@ -1,0 +1,36 @@
+<!-- <!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="sendData()">Send Object</button>
+
+    <script>
+      function sendData() {
+        const user = {
+          name: "Alice",
+          age: 30,
+          interests: ["JS", "HTML"],
+        };
+
+        const jsonString = JSON.stringify(user);
+        const encoded = encodeURIComponent(jsonString);
+
+        window.location.href = `receiver.html?data=${encoded}`;
+      }
+    </script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="sendString()">Send String</button>
+
+    <script>
+      function sendString() {
+        const myString = "Hello from sender!";
+        const encoded = encodeURIComponent(myString);
+        window.location.href = `receiver.html?data=${encoded}`;
+      }
+    </script>
+  </body>
+</html>

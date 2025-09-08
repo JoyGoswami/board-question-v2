@@ -1,0 +1,34 @@
+<!-- <!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get("data");
+
+      if (encoded) {
+        try {
+          const decoded = decodeURIComponent(encoded);
+          const obj = JSON.parse(decoded);
+
+          document.body.innerText = `Received user: ${obj.name}, age: ${obj.age}`;
+        } catch (err) {
+          document.body.innerText = "Failed to parse object.";
+          console.error(err);
+        }
+      } else {
+        document.body.innerText = "No data received.";
+      }
+    </script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const data = decodeURIComponent(params.get("data"));
+      document.body.innerText = "Received: " + data;
+    </script>
+  </body>
+</html>
