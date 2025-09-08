@@ -1,0 +1,79 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* 001B79  */
+:root {
+  --bg-color: #f2f4f7;
+  --question-cont-clr: #ffffff;
+  --border-clr: #dddfe1;
+  --secondary-clr: #0d99ff;
+  --light-blue: #e8f0fe;
+}
+
+body {
+  background-color: var(--bg-color);
+  /* font-family: "Roboto", sans-serif; */
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  /* max-width: 794px; */
+  max-width: 1000px;
+
+  margin: 0 auto;
+  /* border: 1px solid red; */
+}
+.box-shadow {
+  box-shadow: 0px 0px 10px 1px var(--border-clr);
+}
+
+/* Header  */
+header {
+  width: 100%;
+
+  /* background-color: var(--question-cont-clr); */
+  margin-bottom: 24px;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  margin-bottom: 24px;
+  background-color: var(--question-cont-clr);
+
+  position: fixed;
+  top: 0px;
+  transition: top 0.3s ease;
+}
+.logo p {
+  font-size: 40px;
+  font-weight: bolder;
+  color: var(--secondary-clr);
+}
+
+.card-container {
+  max-width: 794px;
+  margin: 94px auto 0 auto;
+}
+.card-container h1 {
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.board-card {
+  background-color: var(--question-cont-clr);
+  margin: 0 auto 16px auto;
+  max-width: 70%;
+  padding: 1rem;
+  cursor: pointer;
+}
+.board-card h2 {
+  font-weight: 300;
+}
