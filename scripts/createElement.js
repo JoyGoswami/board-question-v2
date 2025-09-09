@@ -15,8 +15,9 @@ export function createElement(
   if (elTextContent !== null) {
     createEl.textContent = elTextContent;
   }
+  let createChildEl;
   if (childEl !== null) {
-    const createChildEl = document.createElement(childEl);
+    createChildEl = document.createElement(childEl);
     if (childElTextContent !== null) {
       createChildEl.textContent = childElTextContent;
     }
@@ -25,7 +26,9 @@ export function createElement(
         createChildEl.classList.add(classes);
       });
     }
-    createEl.append(childEl);
+
+    createEl.append(createChildEl);
   }
+
   return createEl;
 }
