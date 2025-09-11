@@ -1,4 +1,5 @@
 import { getAllExamBoardYearSubjectObj } from "./makeQuestionArr.js";
+import { createElement } from "./createElement.js";
 
 const params = new URLSearchParams(window.location.search);
 // purse the stringify object
@@ -28,19 +29,57 @@ filterForm.addEventListener("submit", (e) => {
   const formData = new FormData(filterForm);
 
   const data = Object.fromEntries(formData.entries());
+
+  const convertSubject = data.subject.split("-").join(" ");
+  const convertBoard = data.board.split("-").join(" ");
+  const convertType = data.type.split("-").join(" ");
+
+  data.subject = convertSubject;
+  data.board = convertBoard;
+  data.type = convertType;
   const dataStr = JSON.stringify(data);
 
   const dataEncoded = encodeURIComponent(dataStr);
-  console.log(dataEncoded);
 
   window.location.href = `../pages/displayData.html?data=${dataEncoded}`;
 });
 
 // Populate filter options
-const selectExamEl = document.getElementById("exam");
-const selectSubjectEl = document.getElementById("subject");
-const selectBoardEl = document.getElementById("board");
-const selectYearEl = document.getElementById("year");
-const selectTypeEl = document.getElementById("type");
+const { boardsArr, subjectsArr, yearArr, typeArr } =
+  getAllExamBoardYearSubjectObj(exam); // get the number of boards, subs, year, type database has
 
-console.log(getAllExamBoardYearSubjectObj(exam));
+// option gets selected depending on exam
+const selectExamEl = document.getElementById("exam");
+const selectEl = selectExamEl.options;
+for (let i = 0; i < selectEl.length; i++) {
+  if (selectEl[i].value === exam) {
+    selectEl[i].selected = true;
+  }
+}
+
+// populate subject
+const selectSubjectEl = document.getElementById("subject");
+populateOption(subjectsArr, selectSubjectEl, subject);
+
+// populate boards
+const selectBoardEl = document.getElementById("board");
+populateOption(boardsArr, selectBoardEl, board);
+
+// populate year
+const selectYearEl = document.getElementById("year");
+populateOption(yearArr, selectYearEl, year);
+
+// populate type
+const selectTypeEl = document.getElementById("type");
+populateOption(typeArr, selectTypeEl, type);
+
+function populateOption(array, parentEl, selectedOption) {
+  array.forEach((data) => {
+    const option = createElement("option", null, data, null, null, null);
+    option.value = data.split(" ").join("-");
+    if (data === selectedOption) {
+      option.selected = true;
+    }
+    parentEl.append(option);
+  });
+}
