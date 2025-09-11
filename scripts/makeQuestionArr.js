@@ -1,0 +1,173 @@
+import { allBoardQuestionsDataArr } from "../scripts/data.js";
+
+// export function getAllBoardExamYear() {
+//   // Returns Array of string like => ["hsc Dhaka-board 2025"]
+//   const allBoardExamYearArr = [];
+//   allBoardQuestionsDataArr.forEach((data) => {
+//     const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+//     const subject = data.subjectName.split(" ").join("-");
+//     let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+//     if (!allBoardExamYearArr.includes(filterStr)) {
+//       allBoardExamYearArr.push(filterStr);
+//     }
+//   });
+//   return allBoardExamYearArr;
+// }
+export function getAllExamBoardYearSubjectObj(examName) {
+  /*
+  returns something like this =>
+  {
+    boardsArr: ["Dhaka Board", "Comilla Board"]
+    subjectsArr: ["English 1st Paper","English 2nd Paper"]
+    yearArr: ["2025","2024"]  
+  }
+
+  */
+  const boardsArr = [];
+  const subjectsArr = [];
+  const yearArr = [];
+  const typeArr = [];
+  const allBoardYearSubObj = {};
+
+  allBoardQuestionsDataArr.forEach((data) => {
+    if (data.examName === examName) {
+      const board = data.board;
+      const year = data.year;
+      const subject = data.subjectName;
+      const type = data.question_type;
+      if (!boardsArr.includes(board)) {
+        boardsArr.push(board);
+      }
+      if (!subjectsArr.includes(subject)) {
+        subjectsArr.push(subject);
+      }
+      if (!yearArr.includes(year)) {
+        yearArr.push(year);
+      }
+      if (!typeArr.includes(type)) {
+        typeArr.push(type);
+      }
+    } else if (examName === "all") {
+      const board = data.board;
+      const year = data.year;
+      const subject = data.subjectName;
+      const type = data.question_type;
+      if (!boardsArr.includes(board)) {
+        boardsArr.push(board);
+      }
+      if (!subjectsArr.includes(subject)) {
+        subjectsArr.push(subject);
+      }
+      if (!yearArr.includes(year)) {
+        yearArr.push(year);
+      }
+      if (!typeArr.includes(type)) {
+        typeArr.push(type);
+      }
+    }
+  });
+
+  allBoardYearSubObj.boardsArr = boardsArr;
+  allBoardYearSubObj.subjectsArr = subjectsArr;
+  allBoardYearSubObj.yearArr = yearArr;
+  allBoardYearSubObj.typeArr = typeArr;
+  return allBoardYearSubObj;
+}
+
+// export function getAllBoardExamYear(examName) {
+//   const allBoardExamYearArr = [];
+//   if (examName === "ssc") {
+//     allBoardQuestionsDataArr.forEach((data) => {
+//       if (data.examName === examName) {
+//         const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+//         const subject = data.subjectName.split(" ").join("-");
+//         let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+
+//         if (!allBoardExamYearArr.includes(filterStr)) {
+//           allBoardExamYearArr.push(filterStr);
+//         }
+//       }
+//     });
+//   } else if (examName === "hsc") {
+//     allBoardQuestionsDataArr.forEach((data) => {
+//       if (data.examName === examName) {
+//         const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+//         const subject = data.subjectName.split(" ").join("-");
+//         let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+
+//         if (!allBoardExamYearArr.includes(filterStr)) {
+//           allBoardExamYearArr.push(filterStr);
+//         }
+//       }
+//     });
+//   } else {
+//     allBoardQuestionsDataArr.forEach((data) => {
+//       const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+//       const subject = data.subjectName.split(" ").join("-");
+//       let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+//       if (!allBoardExamYearArr.includes(filterStr)) {
+//         allBoardExamYearArr.push(filterStr);
+//       }
+//     });
+//   }
+
+//   return allBoardExamYearArr;
+// }
+
+export function getAllBoardExamYear(examName) {
+  /*
+  returns something like this =>
+  ["hsc Dhaka-Board 2025 English-2nd-Paper","hsc mymensingh-Board 2024 English-2nd-Paper"]
+  */
+  const allBoardExamYearArr = [];
+
+  allBoardQuestionsDataArr.forEach((data) => {
+    if (data.examName === examName) {
+      const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+      const subject = data.subjectName.split(" ").join("-");
+      let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+
+      if (!allBoardExamYearArr.includes(filterStr)) {
+        allBoardExamYearArr.push(filterStr);
+      }
+    } else if (examName === "all") {
+      const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
+      const subject = data.subjectName.split(" ").join("-");
+      let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
+
+      if (!allBoardExamYearArr.includes(filterStr)) {
+        allBoardExamYearArr.push(filterStr);
+      }
+    }
+  });
+  return allBoardExamYearArr;
+}
+
+export const questionArr = [];
+const allBoardExamYearArr = getAllBoardExamYear("all");
+// It filters mainData Array depending on exam board year subject
+// and make an array out of these data and push it into allBoardExamYearArr
+allBoardExamYearArr.forEach((data) => {
+  const [exam, board, year, subject] = data.split(" ");
+  const boardName = board.split("-").join(" "); // converts "Dhaka-Board" to "Dhaka Board"
+  const subjectName = subject.split("-").join(" ");
+  const question = allBoardQuestionsDataArr.filter((data) => {
+    return (
+      data.examName === exam &&
+      data.board === boardName &&
+      data.year === year &&
+      data.subjectName === subjectName
+    );
+  });
+  questionArr.push(question);
+});
+
+// This separetes part a or b
+export function separatePartAorB(array, partName) {
+  let partFiltered;
+  partFiltered = array.filter((data) => {
+    const partArr = data.part === partName;
+    return partArr;
+  });
+  return partFiltered;
+}

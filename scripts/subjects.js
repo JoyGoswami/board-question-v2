@@ -126,9 +126,11 @@ function handleYearCardClick() {
   yearCardEl.forEach((card) => {
     card.addEventListener("click", (e) => {
       const clickedSubjectYearObj = {
+        exam: examName,
         subject: clickedSubjectStr,
+        board: "all",
         year: e.target.textContent,
-        type: "All",
+        type: "all",
       };
       const clickedSubjectYearObjStr = JSON.stringify(clickedSubjectYearObj);
       const subjectYearStrEncoded = encodeURIComponent(

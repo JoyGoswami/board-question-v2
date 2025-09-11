@@ -5,16 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="../index.css" />
+    <link rel="stylesheet" href="../styles/displayData.css" />
   </head>
   <body>
     <header class="">
       <div class="logo box-shadow">
         <p>Public Tutor</p>
       </div>
+      <nav>
+        <div class="nav-container container">
+          <span class="filter-label">Filter</span>
+          <span class="filter-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-filter"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+              />
+            </svg>
+          </span>
+        </div>
+      </nav>
     </header>
-    <main>
-      <div class="container"></div>
+    <main class="display-main">
+      <div class="container" style="border: 1px solid red">
+        <div class="card-container" style="border: 1px solid red">hi</div>
+      </div>
     </main>
+    <!-- Overlay -->
+    <div class="filter-overlay-container">
+      <div class="container">
+        <div class="filter-container">
+          <form class="filter-form">
+            <div class="form-el-container">
+              <label for="exam">Exam:</label>
+              <select name="exam" id="exam">
+                <option value="none" selected>Select</option>
+                <option value="ssc">SSC</option>
+                <option value="hsc">HSC</option>
+              </select>
+            </div>
+            <div class="form-el-container">
+              <label for="subject">Subject:</label>
+              <select name="subject" id="subject">
+                <option value="" selected>Select</option>
+                <option value="English-1st-Paper">English 1st Paper</option>
+              </select>
+            </div>
+            <div class="form-el-container">
+              <label for="board">Board:</label>
+              <select name="board" id="board">
+                <option value="all" selected>All</option>
+                <option value="Dhaka">Dhaka</option>
+              </select>
+            </div>
+            <div class="form-el-container">
+              <label for="year">Year:</label>
+              <select name="year" id="year">
+                <option value="all" selected>All</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+            <div class="form-el-container">
+              <label for="type">Type:</label>
+              <select name="type" id="type">
+                <option value="all" selected>All</option>
+                <option value="with clue">
+                  Fill jjjjjjjin the gap with clures
+                </option>
+              </select>
+            </div>
+            <div class="form-el-container">
+              <button type="submit">Filter</button>
+            </div>
+            <div class="form-el-container">
+              <button class="cancel-filter">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
   <script type="module" src="../scripts/displayData.js"></script>
+  <script type="module" src="../scripts/makeQuestionArr.js"></script>
+  <script type="module" src="../scripts/filterBehaviour.js"></script>
 </html>

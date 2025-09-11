@@ -1,0 +1,91 @@
+nav {
+  position: fixed;
+  width: 100%;
+  /* height: 24px; */
+  top: 70px;
+  background-color: var(--secondary-clr);
+  padding: 5px 0;
+  cursor: pointer;
+}
+.display-main {
+  margin-top: 120px;
+}
+.nav-container {
+  height: 100%;
+}
+.nav-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.filter-label {
+  font-size: 16px;
+  color: white;
+  font-weight: 200;
+}
+.filter-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filter-icon svg {
+  fill: white;
+  transform: scale(1.5);
+}
+
+.filter-overlay-container {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.5s ease;
+}
+.filter-overlay-container.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+}
+.filter-container {
+  padding: 2rem;
+  /* height: 500px; */
+  max-width: 500px;
+  background-color: rgba(255, 255, 255);
+
+  /* border: 1px solid; */
+}
+.form-el-container {
+  width: 100%;
+  padding: 0.5rem 0;
+
+  display: flex;
+}
+.form-el-container label {
+  font-size: 1.5rem;
+  width: 40%;
+}
+.form-el-container select {
+  width: 60%;
+  font-size: 1.5rem;
+  border: 1px solid var(--secondary-clr);
+}
+.form-el-container button {
+  width: 100%;
+  height: 30px;
+  background-color: #e62727;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+}
+.form-el-container button[type="submit"] {
+  margin-top: 20px;
+  background-color: var(--secondary-clr);
+}
