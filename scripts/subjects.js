@@ -129,7 +129,7 @@ function handleYearCardClick() {
         exam: examName,
         subject: clickedSubjectStr,
         board: "all",
-        year: e.target.textContent,
+        year: e.target.textContent.toLowerCase(),
         type: "all",
       };
       const clickedSubjectYearObjStr = JSON.stringify(clickedSubjectYearObj);

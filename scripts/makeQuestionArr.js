@@ -1,19 +1,54 @@
 import { allBoardQuestionsDataArr } from "../scripts/data.js";
 
-// export function getAllBoardExamYear() {
-//   // Returns Array of string like => ["hsc Dhaka-board 2025"]
-//   const allBoardExamYearArr = [];
-//   allBoardQuestionsDataArr.forEach((data) => {
-//     const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
-//     const subject = data.subjectName.split(" ").join("-");
-//     let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
-//     if (!allBoardExamYearArr.includes(filterStr)) {
-//       allBoardExamYearArr.push(filterStr);
-//     }
-//   });
-//   return allBoardExamYearArr;
-// }
-export function getAllExamBoardYearSubjectObj(examName) {
+// a("ssc", "English 2nd Paper", "all", "all", "all");
+export function getAllExamBoardYearSubjectObj(
+  exam,
+  subject,
+  board,
+  year,
+  type
+) {
+  const boardsArr = [];
+  const subjectsArr = [];
+  const yearArr = [];
+  const typeArr = [];
+  const allBoardYearSubObj = {};
+  console.log(exam);
+  const filteredData = allBoardQuestionsDataArr.filter((data) => {
+    const matchExam = data.examName === exam;
+    const matchSubject = data.subjectName === subject;
+    const matchBoard = board === "all" || data.board === board;
+    const matchYear = year === "all" || data.year === year;
+    const matchType = type === "all" || data.question_type === type;
+
+    return matchExam && matchSubject && matchBoard && matchYear && matchType;
+  });
+  filteredData.forEach((data) => {
+    const board = data.board;
+    const year = data.year;
+    const subject = data.subjectName;
+    const type = data.question_type;
+    if (!boardsArr.includes(board)) {
+      boardsArr.push(board);
+    }
+    if (!subjectsArr.includes(subject)) {
+      subjectsArr.push(subject);
+    }
+    if (!yearArr.includes(year)) {
+      yearArr.push(year);
+    }
+    if (!typeArr.includes(type)) {
+      typeArr.push(type);
+    }
+  });
+  allBoardYearSubObj.boardsArr = boardsArr;
+  allBoardYearSubObj.subjectsArr = subjectsArr;
+  allBoardYearSubObj.yearArr = yearArr;
+  allBoardYearSubObj.typeArr = typeArr;
+  return allBoardYearSubObj;
+}
+
+export function a(examName) {
   /*
   returns something like this =>
   {
@@ -74,46 +109,6 @@ export function getAllExamBoardYearSubjectObj(examName) {
   return allBoardYearSubObj;
 }
 
-// export function getAllBoardExamYear(examName) {
-//   const allBoardExamYearArr = [];
-//   if (examName === "ssc") {
-//     allBoardQuestionsDataArr.forEach((data) => {
-//       if (data.examName === examName) {
-//         const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
-//         const subject = data.subjectName.split(" ").join("-");
-//         let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
-
-//         if (!allBoardExamYearArr.includes(filterStr)) {
-//           allBoardExamYearArr.push(filterStr);
-//         }
-//       }
-//     });
-//   } else if (examName === "hsc") {
-//     allBoardQuestionsDataArr.forEach((data) => {
-//       if (data.examName === examName) {
-//         const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
-//         const subject = data.subjectName.split(" ").join("-");
-//         let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
-
-//         if (!allBoardExamYearArr.includes(filterStr)) {
-//           allBoardExamYearArr.push(filterStr);
-//         }
-//       }
-//     });
-//   } else {
-//     allBoardQuestionsDataArr.forEach((data) => {
-//       const board = data.board.split(" ").join("-"); // converts "Dhaka Board" to "Dhaka-Board"
-//       const subject = data.subjectName.split(" ").join("-");
-//       let filterStr = `${data.examName} ${board} ${data.year} ${subject}`;
-//       if (!allBoardExamYearArr.includes(filterStr)) {
-//         allBoardExamYearArr.push(filterStr);
-//       }
-//     });
-//   }
-
-//   return allBoardExamYearArr;
-// }
-
 export function getAllBoardExamYear(examName) {
   /*
   returns something like this =>
@@ -170,4 +165,33 @@ export function separatePartAorB(array, partName) {
     return partArr;
   });
   return partFiltered;
+}
+
+// It will filter the questionArr depending on user input(exam, subject, board, year, type)
+export function filterData(exam, subject, board, year, type) {
+  const filteredQuestionArr = []; // stores the filtered data
+  // empty the filteredQuestionArr (it will store the filtered data)
+  filteredQuestionArr.splice(0, filteredQuestionArr.length);
+  // console.log(exam);
+
+  questionArr.forEach((questionData) => {
+    const filteredData = questionData.filter((data) => {
+      // if board === "all" it will not filter the data
+      // instead return the all board data
+      // If board === "Dhaka Board"
+      // it will return only dhaka board data
+
+      const matchExam = data.examName === exam;
+      const matchSubject = data.subjectName === subject;
+      const matchBoard = board === "all" || data.board === board;
+      const matchYear = year === "all" || data.year === year;
+      const matchType = type === "all" || data.question_type === type;
+
+      return matchExam && matchSubject && matchBoard && matchYear && matchType;
+    });
+    if (filteredData.length > 0) {
+      filteredQuestionArr.push(filteredData);
+    }
+  });
+  return filteredQuestionArr;
 }
