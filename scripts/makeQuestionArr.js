@@ -1,19 +1,13 @@
 import { allBoardQuestionsDataArr } from "../scripts/data.js";
 
 // a("ssc", "English 2nd Paper", "all", "all", "all");
-export function getAllExamBoardYearSubjectObj(
-  exam,
-  subject,
-  board,
-  year,
-  type
-) {
+export function a(exam, subject, board, year, type) {
   const boardsArr = [];
   const subjectsArr = [];
   const yearArr = [];
   const typeArr = [];
   const allBoardYearSubObj = {};
-  console.log(exam);
+
   const filteredData = allBoardQuestionsDataArr.filter((data) => {
     const matchExam = data.examName === exam;
     const matchSubject = data.subjectName === subject;
@@ -48,7 +42,7 @@ export function getAllExamBoardYearSubjectObj(
   return allBoardYearSubObj;
 }
 
-export function a(examName) {
+export function getAllExamBoardYearSubjectObj(examName) {
   /*
   returns something like this =>
   {

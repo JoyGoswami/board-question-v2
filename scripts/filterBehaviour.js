@@ -13,7 +13,6 @@ const { exam, subject, board, year, type } = JSON.parse(
   decodeURIComponent(params.get("data"))
 );
 const uriData = JSON.parse(decodeURIComponent(params.get("data")));
-console.log(JSON.parse(decodeURIComponent(params.get("data"))));
 
 // nav filter btn behaviour
 const navContainer = document.querySelector(".nav-container");
@@ -54,6 +53,15 @@ filterForm.addEventListener("submit", (e) => {
 filterForm.addEventListener("change", (e) => {
   const formData = new FormData(filterForm);
   const onchangeData = Object.fromEntries(formData.entries());
+  if (e.target.id === "exam") {
+    console.log("yess");
+    onchangeData.exam = e.target.value;
+    onchangeData.subject = subject;
+    onchangeData.board = "all";
+    onchangeData.year = "all";
+    onchangeData.type = "all";
+  }
+  console.log(onchangeData);
 
   const exam = onchangeData.exam;
   const convertSubject = onchangeData.subject.split("-").join(" "); // convert "English-1st-paper" to "English 1st Paper"
@@ -85,21 +93,14 @@ filterForm.addEventListener("change", (e) => {
     )
   );
   const { boardsArr, subjectsArr, yearArr, typeArr } =
-    getAllExamBoardYearSubjectObj(
-      onchangeData.exam,
-      onchangeData.subject,
-      onchangeData.board,
-      onchangeData.year,
-      onchangeData.type
-    ); // get the number of boards, subs, year, type database hass
+    getAllExamBoardYearSubjectObj(onchangeData.exam); // get the number of boards, subs, year, type database hass
 
   populateOptions(subjectsArr, boardsArr, yearArr, typeArr, onchangeData);
 });
 
-console.log(getAllExamBoardYearSubjectObj(exam, subject, board, year, type));
 // Populate filter options
 const { boardsArr, subjectsArr, yearArr, typeArr } =
-  getAllExamBoardYearSubjectObj(exam, subject, board, year, type); // get the number of boards, subs, year, type database has
+  getAllExamBoardYearSubjectObj(exam); // get the number of boards, subs, year, type database has
 
 // option gets selected depending on exam
 const selectExamEl = document.getElementById("exam");
