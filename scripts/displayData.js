@@ -1,5 +1,5 @@
 import { allBoardQuestionsDataArr } from "../scripts/data.js";
-import { createElement } from "./createElement.js";
+import { createElement, createEnglishEachQuestionEl } from "./createElement.js";
 import {
   filterData,
   questionArr,
@@ -28,7 +28,7 @@ function separatePartAorBFromUserEnteredData(dataArr) {
 
 function createQuestionEl(dataArray) {
   const questionContainerEl = document.querySelector(".question-container");
-  // questionContainerEl.textContent = ""; // If there is any previous question, clean it
+  questionContainerEl.textContent = ""; // If there is any previous question, clean it
 
   console.log(dataArray);
   dataArray.forEach((data) => {
@@ -48,7 +48,7 @@ function createQuestionEl(dataArray) {
 
     const questionEl = createElement(
       "div",
-      ["questin"],
+      ["question"],
       null,
       null,
       null,
@@ -60,6 +60,23 @@ function createQuestionEl(dataArray) {
 
     // Part A
     createPartEl(partNameA, questionEl);
+
+    // Question No 1 to all from part A
+    if (data[0].length > 0) {
+      data[0].forEach((partAQuestionItem) => {
+        createEnglishEachQuestionEl(partAQuestionItem, questionEl);
+      });
+    }
+
+    // Part B
+    createPartEl(partNameB, questionEl);
+
+    // Question after part A
+    if (data[1].length > 0) {
+      data[1].forEach((partBQuestionItem) => {
+        createEnglishEachQuestionEl(partBQuestionItem, questionEl);
+      });
+    }
 
     questionContainerEl.append(questionEl);
   });
