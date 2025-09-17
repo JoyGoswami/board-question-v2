@@ -84,3 +84,7 @@ main {
 .board-card h2 {
   font-weight: 300;
 }
+
+table {
+  width: 100%;
+}

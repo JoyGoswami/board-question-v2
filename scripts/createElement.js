@@ -203,6 +203,7 @@ export function createEnglishEachQuestionEl(questionItems, parentEl) {
   const questionNo = `${questionItems.question_no}.`;
   const questionTitle = questionItems.question_title;
   const questionMark = questionItems.mark;
+  const questionType = questionItems.question_type;
   let questionClues = "";
   if (questionItems.clues) {
     questionClues = questionItems.clues;
@@ -293,31 +294,36 @@ export function createEnglishEachQuestionEl(questionItems, parentEl) {
     questionBodyEl.append(questionCluesEl);
   }
 
+  const questionBodyDetailsEl = createElement(
+    "div",
+    ["question-body-details"],
+    null,
+    null,
+    null,
+    null
+  );
   if (question) {
-    const questionBodyDetailsEl = createElement(
-      "div",
-      ["question-body-details"],
-      null,
-      null,
-      null,
-      null
-    );
     // if (question.length > 1 && questionNo === "3.") {
     //   console.log(question);
     //   createTableEl(question, questionBodyContainerEl)
     // } else {
     //   console.log("hello");
     // }
-    createQuestionBody(question, questionNo, questionBodyDetailsEl);
+    createQuestionBody(
+      question,
+      questionNo,
+      questionType,
+      questionBodyDetailsEl
+    );
   }
-  const questionBodyDetailsEl = createElement(
-    "div",
-    ["question-body-details"],
-    question,
-    null,
-    null,
-    null
-  );
+  // const questionBodyDetailsEl = createElement(
+  //   "div",
+  //   ["question-body-details"],
+  //   question,
+  //   null,
+  //   null,
+  //   null
+  // );
   questionBodyEl.append(questionBodyDetailsEl);
   questionBodyContainerEl.append(questionBodyEl);
 
@@ -328,46 +334,79 @@ export function createEnglishEachQuestionEl(questionItems, parentEl) {
     questionItemsEl.append(questionTitleContainerEl);
   }
   parentEl.append(questionItemsEl);
-  // console.log(questionItemsEl);
 }
 
 function createQuestionClues(clueArr, parentEl) {
-  const firstFiveClues = clueArr.splice(0, 5);
-  const lastClues = clueArr;
+  if (clueArr.length > 1) {
+    const firstFiveClues = clueArr.splice(0, 5);
+    const lastClues = clueArr;
 
-  const tableEl = createElement("table", null, null, null, null, null);
+    const tableEl = createElement("table", null, null, null, null, null);
 
-  const firstTr = createElement("tr", null, null, null, null, null);
-  firstFiveClues.forEach((data) => {
-    const td = createElement("td", null, null, null, null, null);
-    td.textContent = data;
-    firstTr.append(td);
-  });
+    const firstTr = createElement("tr", null, null, null, null, null);
+    firstFiveClues.forEach((data) => {
+      const td = createElement("td", null, null, null, null, null);
+      td.textContent = data;
+      firstTr.append(td);
+    });
 
-  const secondTr = createElement("tr", null, null, null, null, null);
-  lastClues.forEach((data) => {
-    const td = createElement("td", null, null, null, null, null);
-    td.textContent = data;
-    secondTr.append(td);
-  });
+    const secondTr = createElement("tr", null, null, null, null, null);
+    lastClues.forEach((data) => {
+      const td = createElement("td", null, null, null, null, null);
+      td.textContent = data;
+      secondTr.append(td);
+    });
 
-  tableEl.append(firstTr, secondTr);
-  parentEl.append(tableEl);
-}
-
-function createQuestionBody(questionArr, questionNo, parentEl) {
-  if (questionArr.length > 1 && questionNo === "3.") {
-    // substitute table
-    // createTableEl(questionArr);
-    const placeholder = createElement("p", null, null, null, null, null);
-    parentEl.append(placeholder);
+    tableEl.append(firstTr, secondTr);
+    parentEl.append(tableEl);
+  } else {
+    const p = document.createElement("p");
+    p.innerHTML = clueArr[0];
+    parentEl.append(p);
   }
 }
 
-function createTableEl(questionArr) {
-  questionArr.forEach((data) => {
-    data.forEach((d) => {
-      // console.log("data", data, "d", d);
+function createQuestionBody(questionArr, questionNo, questionType, parentEl) {
+  if (questionArr.length > 1 && questionType === "Table") {
+    // substitute table
+    // createTableEl(questionArr)
+    const tableColumnOne = questionArr[0];
+    const tableColumnTwo = questionArr[1];
+    const tableColumnThree = questionArr[2];
+
+    const tableEl = createElement("table", null, null, null, null, null);
+    tableColumnThree.forEach((data, index) => {
+      const columnOneData = tableColumnOne[index] || "";
+      const columnTwoData = tableColumnTwo[index] || "";
+      const columnThreeData = tableColumnThree[index] || "";
+      const tr = createElement("tr", null, null, null, null, null);
+      const tdOne = createElement("td", null, columnOneData, null, null, null);
+      const tdTwo = createElement("td", null, columnTwoData, null, null, null);
+      const tdThree = createElement(
+        "td",
+        null,
+        columnThreeData,
+        null,
+        null,
+        null
+      );
+
+      tr.append(tdOne, tdTwo, tdThree);
+      tableEl.append(tr);
     });
-  });
+
+    parentEl.append(tableEl);
+  } else if (questionArr.length > 1 && questionType === "Changing sentence") {
+    // Changing Sentences
+    questionArr.forEach((data) => {
+      const p = createElement("p", null, data.question, null, null, null);
+      parentEl.append(p);
+    });
+  } else {
+    // rest of the questions
+    questionArr.forEach((data) => {
+      const p = createElement("p", null, data, null, null, null);
+      parentEl.append(p);
+    });
+  }
 }
